@@ -8,8 +8,9 @@ const {
   Select,
   Password,
   CloudinaryImage,
-} = require('@keystone-next/fields-legacy');
-const { CloudinaryAdapter, LocalFileAdapter } = require('@keystone-next/file-adapters-legacy');
+} = require('@keystonejs/fields');
+const { CloudinaryImage, CloudinaryAdapter } = require('@keystone-next/fields-cloudinary-image-legacy');
+const { LocalFileAdapter } = require('@keystone-next/file-adapters-legacy');
 const { GraphQLApp } = require('@keystone-next/app-graphql-legacy');
 const { AdminUIApp } = require('@keystone-next/app-admin-ui-legacy');
 const { StaticApp } = require('@keystone-next/app-static-legacy');

@@ -10,9 +10,8 @@ const {
   Relationship,
   Select,
   Text,
-} = require('@keystone-next/fields-legacy');
-const { CloudinaryAdapter } = require('@keystone-next/file-adapters-legacy');
-const { CloudinaryImage } = require('@keystone-next/fields-cloudinary-image-legacy');
+} = require('@keystonejs/fields');
+const { CloudinaryImage, CloudinaryAdapter } = require('@keystone-next/fields-cloudinary-image-legacy');
 const { Wysiwyg } = require('@keystone-next/fields-wysiwyg-tinymce-legacy');
 
 const cloudinaryAdapter = new CloudinaryAdapter({

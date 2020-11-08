@@ -13,19 +13,19 @@ const {
   Slug,
   Virtual,
   Decimal,
-} = require('@keystone-next/fields-legacy');
-const { Content } = require('@keystone-next/fields-content-legacy');
-const { CloudinaryAdapter, LocalFileAdapter } = require('@keystone-next/file-adapters-legacy');
-const { Markdown } = require('@keystone-next/fields-markdown-legacy');
-const { Wysiwyg } = require('@keystone-next/fields-wysiwyg-tinymce-legacy');
-const { Color } = require('@keystone-next/fields-color-legacy');
-const { GraphQLApp } = require('@keystone-next/app-graphql-legacy');
-const { AdminUIApp } = require('@keystone-next/app-admin-ui-legacy');
-const { StaticApp } = require('@keystone-next/app-static-legacy');
+} = require('@keystonejs/fields');
+const { Content } = require('@keystonejs/fields-content');
+const { LocalFileAdapter } = require('@keystonejs/file-adapters');
+const { Markdown } = require('@keystonejs/fields-markdown');
+const { Wysiwyg } = require('@keystonejs/fields-wysiwyg-tinymce');
+const { Color } = require('@keystonejs/fields-color');
+const { GraphQLApp } = require('@keystonejs/app-graphql');
+const { AdminUIApp } = require('@keystonejs/app-admin-ui');
+const { StaticApp } = require('@keystonejs/app-static');
 const { graphql } = require('graphql');
-const { OEmbed, IframelyOEmbedAdapter } = require('@keystone-next/fields-oembed-legacy');
-const { CloudinaryImage } = require('@keystone-next/fields-cloudinary-image-legacy');
-const { Unsplash } = require('@keystone-next/fields-unsplash-legacy');
+const { OEmbed, IframelyOEmbedAdapter } = require('@keystonejs/fields-oembed');
+const { CloudinaryImage, CloudinaryAdapter } = require('@keystonejs/fields-cloudinary-image');
+const { Unsplash } = require('@keystonejs/fields-unsplash');
 
 const MockOEmbedAdapter = require('./mocks/oembed-adapter');
 
