@@ -1,4 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'http';
+import type { Config } from 'apollo-server-express';
 import cors, { CorsOptions } from 'cors';
 import express from 'express';
 import { GraphQLSchema } from 'graphql';
@@ -15,17 +16,29 @@ const addApolloServer = ({
   graphQLSchema,
   createContext,
   sessionStrategy,
+  apolloConfig,
 }: {
   server: express.Express;
   graphQLSchema: GraphQLSchema;
   createContext: CreateContext;
   sessionStrategy?: SessionStrategy<any>;
+  apolloConfig?: Config;
 }) => {
+  // Playground config
+  const pp = apolloConfig?.playground;
+  let playground: Config['playground'];
+  const settings = { 'request.credentials': 'same-origin' };
+  if (typeof pp === 'boolean' && !pp) {
+    playground = undefined;
+  } else if (typeof pp === 'undefined' || typeof pp === 'boolean') {
+    playground = { settings };
+  } else {
+    playground = { ...pp, settings: { ...settings, ...pp.settings } };
+  }
   const apolloServer = new ApolloServer({
     uploads: false,
     schema: graphQLSchema,
-    // FIXME: allow the dev to control where/when they get a playground
-    playground: { settings: { 'request.credentials': 'same-origin' } },
+
     formatError, // TODO: this needs to be discussed
     context: async ({ req, res }: { req: IncomingMessage; res: ServerResponse }) =>
       createContext({
@@ -44,8 +57,9 @@ const addApolloServer = ({
     //       // disabled.
     //       tracing: dev,
     //     }),
-    // FIXME: Support for generic custom apollo configuration
-    // ...apolloConfig,
+    ...apolloConfig,
+    // Carefully inject the playground
+    playground,
   });
   // FIXME: Support custom API path via config.graphql.path.
   // Note: Core keystone uses '/admin/api' as the default.
@@ -79,7 +93,13 @@ export const createExpressServer = async (
   const sessionStrategy = config.session ? config.session() : undefined;
 
   if (isVerbose) console.log('✨ Preparing GraphQL Server');
-  addApolloServer({ server, graphQLSchema, createContext, sessionStrategy });
+  addApolloServer({
+    server,
+    graphQLSchema,
+    createContext,
+    sessionStrategy,
+    apolloConfig: config.graphql?.apolloConfig,
+  });
 
   if (config.ui?.isDisabled) {
     if (isVerbose) console.log('✨ Skipping Admin UI app');
